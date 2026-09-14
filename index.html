@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiWallet — Sua carteira, reinventada</title>
+<meta name="description" content="DigiWallet: tecnologia para levar seus cartões e documentos essenciais para um único dispositivo.">
+<style>
+:root{
+  --bg:#020202;
+  --panel:#0a0a0b;
+  --panel2:#111113;
+  --text:#f5f5f5;
+  --muted:#a4a4a8;
+  --line:rgba(255,255,255,.12);
+  --soft:rgba(255,255,255,.055);
+  --max:1220px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text); background:
+    radial-gradient(circle at 82% 8%,rgba(255,255,255,.13),transparent 22%),
+    radial-gradient(circle at 12% 55%,rgba(255,255,255,.055),transparent 24%),
+    #020202;
+  line-height:1.6; overflow-x:hidden;
+}
+body:before, body:after{
+  content:""; position:fixed; pointer-events:none; z-index:-1;
+  width:520px;height:180px;border-radius:50%;
+  border:28px solid rgba(245,245,245,.10);
+  filter:blur(2px); transform:rotate(-34deg);
+}
+body:before{left:-220px;top:110px;box-shadow:0 0 0 18px rgba(255,255,255,.035),0 0 0 42px rgba(255,255,255,.02)}
+body:after{right:-260px;bottom:110px;transform:rotate(32deg);box-shadow:0 0 0 18px rgba(255,255,255,.03)}
+a{text-decoration:none;color:inherit}
+.container{width:min(var(--max),92%);margin:auto}
+nav{
+  position:sticky;top:0;z-index:30;
+  backdrop-filter:blur(20px);
+  background:rgba(2,2,2,.76);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between}
+.logo{
+  font-size:1.32rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+}
+.logo span{color:#bdbdc0}
+.nav-links{display:flex;gap:30px;color:#a7a7aa;font-size:.82rem;text-transform:uppercase;letter-spacing:.13em}
+.nav-links a{transition:.2s}.nav-links a:hover{color:#fff}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 20px;border-radius:999px;font-weight:700;font-size:.88rem;
+  background:#f4f4f4;color:#050505;transition:.25s;border:1px solid #f4f4f4;cursor:pointer;
+}
+.btn:hover{transform:translateY(-2px);background:#fff;box-shadow:0 10px 35px rgba(255,255,255,.12)}
+.btn.secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.22)}
+.hero{min-height:calc(100vh - 76px);display:flex;align-items:center;padding:70px 0 95px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.eyebrow{
+  display:inline-flex;padding:8px 13px;border:1px solid var(--line);
+  color:#d6d6d8;border-radius:999px;font-size:.72rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:25px;background:rgba(255,255,255,.035)
+}
+h1{
+  font-size:clamp(3.2rem,7vw,6.8rem);line-height:.91;letter-spacing:-.075em;
+  max-width:720px;text-transform:uppercase;
+}
+.gradient{
+  background:linear-gradient(100deg,#fff 10%,#a9a9ad 47%,#fff 75%,#777);-webkit-background-clip:text;
+  background-clip:text;color:transparent;
+}
+.hero p{color:#a9a9ad;font-size:1.05rem;max-width:570px;margin:27px 0 32px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-art{position:relative;min-height:520px;display:grid;place-items:center}
+.hero-art:before{
+  content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.18),rgba(255,255,255,.035) 35%,transparent 68%);
+  filter:blur(10px)
+}
+.hero-card{
+  position:relative;width:min(500px,90%);border-radius:28px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 45px 100px rgba(0,0,0,.7),0 0 70px rgba(255,255,255,.08);
+  transform:rotate(3deg);background:#090909;
+}
+.hero-card img{display:block;width:100%;height:500px;object-fit:cover;object-position:center}
+.hero-label{
+  position:absolute;left:22px;bottom:20px;padding:9px 13px;border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;background:rgba(0,0,0,.62);backdrop-filter:blur(12px);
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase
+}
+section{padding:110px 0}
+.section-head{max-width:760px;margin:0 auto 52px;text-align:center}
+.section-head .kicker{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#8e8e92;margin-bottom:12px}
+.section-head h2{font-size:clamp(2.3rem,4vw,4.2rem);line-height:1;letter-spacing:-.065em;text-transform:uppercase}
+.section-head p{color:#98989c;margin-top:15px}
+.products{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+}
+.product{
+  position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+  padding:12px;transition:.35s;
+}
+.product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.28);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.product.featured{grid-column:span 2}
+.product-image{
+  height:350px;border-radius:21px;overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,255,255,.16),transparent 35%),
+    linear-gradient(145deg,#191919,#050505);
+}
+.product.featured .product-image{height:470px}
+.product-image img{
+  width:100%;height:100%;object-fit:cover;display:block;transition:.45s;
+}
+.product:hover .product-image img{transform:scale(1.025)}
+.product-info{padding:20px 14px 13px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.product-info h3{font-size:1.35rem;letter-spacing:-.03em;text-transform:uppercase}
+.product-info p{color:#929296;font-size:.82rem;margin-top:3px}
+.view-btn{
+  white-space:nowrap;border:1px solid rgba(255,255,255,.18);border-radius:999px;
+  padding:9px 15px;font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;
+  background:rgba(255,255,255,.05);transition:.2s
+}
+.view-btn:hover{background:#fff;color:#000}
+.badge{
+  position:absolute;top:24px;left:24px;z-index:2;padding:8px 12px;border-radius:999px;
+  background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(12px);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase
+}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature{
+  padding:30px;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018));
+}
+.feature .bigicon{font-size:1.6rem;margin-bottom:17px;color:#fff}
+.feature h3{margin-bottom:7px;text-transform:uppercase;font-size:.95rem;letter-spacing:.05em}
+.feature p{color:#929296;font-size:.9rem}
+.about{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
+.about h2{font-size:clamp(2.5rem,4vw,4.5rem);line-height:.96;letter-spacing:-.065em;text-transform:uppercase;margin-bottom:18px}
+.about p{color:#99999d;max-width:620px}
+.about-box{
+  min-height:330px;padding:38px;border:1px solid var(--line);border-radius:28px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(255,255,255,.16),transparent 32%),
+    linear-gradient(145deg,#141414,#050505);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.about-box h3{font-size:1.45rem;text-transform:uppercase;margin-bottom:8px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:25px}
+.stat{padding:17px;border-radius:15px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+.stat strong{display:block;font-size:1.5rem}.stat span{font-size:.76rem;color:#8d8d91;text-transform:uppercase;letter-spacing:.08em}
+.cta{
+  text-align:center;border:1px solid var(--line);border-radius:30px;padding:70px 20px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,255,255,.14),transparent 45%),
+    linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+}
+.cta h2{font-size:clamp(2.3rem,5vw,4.6rem);line-height:.95;letter-spacing:-.065em;text-transform:uppercase;margin-bottom:14px}
+.cta p{color:#949498;margin-bottom:25px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:#77777b;font-size:.76rem;text-transform:uppercase;letter-spacing:.1em}
+.footer-inner{display:flex;justify-content:space-between;gap:20px}
+.modal{
+  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);
+  display:none;align-items:center;justify-content:center;padding:24px
+}
+.modal.open{display:flex}
+.modal-card{
+  width:min(920px,96vw);max-height:92vh;overflow:auto;border:1px solid rgba(255,255,255,.18);
+  border-radius:28px;background:#080808;box-shadow:0 40px 100px rgba(0,0,0,.75)
+}
+.modal-image{width:100%;max-height:70vh;object-fit:contain;display:block;background:#030303}
+.modal-content{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.modal-content h3{text-transform:uppercase;font-size:1.5rem}
+.close{border:1px solid var(--line);background:#111;color:#fff;border-radius:50%;width:42px;height:42px;font-size:1.1rem;cursor:pointer}
+@media(max-width:850px){
+  .hero-grid,.about{grid-template-columns:1fr}
+  .hero{padding-top:55px}.hero-art{min-height:420px}.hero-card img{height:400px}
+  .products{grid-template-columns:1fr}.product.featured{grid-column:span 1}.product.featured .product-image{height:350px}
+  .features{grid-template-columns:1fr}.nav-links{display:none}.nav-inner{height:68px}
+  .footer-inner{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container nav-inner">
+    <a class="logo" href="#">Digi<span>Wallet</span></a>
+    <div class="nav-links">
+      <a href="#produtos">Produtos</a>
+      <a href="#tecnologia">Tecnologia</a>
+      <a href="#sobre">Sobre</a>
+    </div>
+    <a class="btn" href="#produtos">Ver carteiras</a>
+  </div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">DigiWallet · Smart Wallet</span>
+      <h1>Menos cartões.<br><span class="gradient">Mais liberdade.</span></h1>
+      <p>A DigiWallet reúne seus cartões essenciais em um único dispositivo inteligente, com acesso rápido e recursos de segurança avançados.</p>
+      <div class="actions">
+        <a class="btn" href="#produtos">Conheça os modelos</a>
+        <a class="btn secondary" href="#tecnologia">Como funciona</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-card">
+        <img src="assets/digiwallet-one.png" alt="DigiWallet One">
+        <div class="hero-label">DigiWallet One · Modelo principal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="produtos">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Coleção DigiWallet</div>
+      <h2>Escolha a sua DigiWallet</h2>
+      <p>Conheça os quatro modelos da marca e veja de perto o design de cada carteira.</p>
+    </div>
+    <div class="products">
+      <article class="product featured">
+        <span class="badge">Modelo principal</span>
+        <div class="product-image"><img src="assets/digiwallet-one.png" alt="DigiWallet One"></div>
+        <div class="product-info">
+          <div><h3>DigiWallet One</h3><p>A experiência completa da DigiWallet.</p></div>
+          <button class="view-btn" data-image="assets/digiwallet-one.png" data-name="DigiWallet One">Ver carteira</button>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-image"><img src="assets/digiwallet-bloom.png" alt="DigiWallet Bloom"></div>
+        <div class="product-info">
+          <div><h3>DigiWallet Bloom</h3><p>Design, tecnologia e personalidade.</p></div>
+          <button class="view-btn" data-image="assets/digiwallet-bloom.png" data-name="DigiWallet Bloom">Ver carteira</button>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-image"><img src="assets/digiwallet-go.png" alt="DigiWallet Go"></div>
+        <div class="product-info">
+          <div><h3>DigiWallet Go</h3><p>Uma versão jovem e conectada.</p></div>
+          <button class="view-btn" data-image="assets/digiwallet-go.png" data-name="DigiWallet Go">Ver carteira</button>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-image"><img src="assets/digiwallet-easy.png" alt="DigiWallet Easy"></div>
+        <div class="product-info">
+          <div><h3>DigiWallet Easy</h3><p>Praticidade para o dia a dia.</p></div>
+          <button class="view-btn" data-image="assets/digiwallet-easy.png" data-name="DigiWallet Easy">Ver carteira</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="tecnologia">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Tecnologia</div>
+      <h2>Tecnologia pensada para você</h2>
+      <p>Os principais conceitos da proposta da DigiWallet apresentados de forma simples.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="bigicon">◉</div><h3>Acesso protegido</h3><p>Senha, reconhecimento facial e biometria para proteger o acesso ao dispositivo.</p></div>
+      <div class="feature"><div class="bigicon">▣</div><h3>Cartões em um só lugar</h3><p>Centralize cartões bancários, planos, fidelidade e outros cartões digitais.</p></div>
+      <div class="feature"><div class="bigicon">✦</div><h3>Praticidade</h3><p>Uma interface simples para encontrar rapidamente o cartão ou informação necessária.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="container about">
+    <div>
+      <div class="section-head" style="text-align:left;margin:0 0 20px">
+        <div class="kicker">Sobre a DigiWallet</div>
+        <h2>Uma nova forma de carregar o essencial.</h2>
+      </div>
+      <p>A DigiWallet nasce da ideia de transformar a carteira tradicional em um dispositivo inteligente, reduzindo o espaço físico ocupado por cartões e reunindo diferentes informações em uma experiência digital.</p>
+      <div class="stats">
+        <div class="stat"><strong>1</strong><span>dispositivo</span></div>
+        <div class="stat"><strong>∞</strong><span>possibilidades de cartões</span></div>
+      </div>
+    </div>
+    <div class="about-box">
+      <h3>Nosso propósito</h3>
+      <p>Unir praticidade, segurança e tecnologia em um produto que acompanhe a rotina das pessoas.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta">
+      <h2>O futuro cabe na sua carteira.</h2>
+      <p>Explore os modelos e conheça a proposta DigiWallet.</p>
+      <a class="btn" href="#produtos">Explorar modelos</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 DigiWallet</span>
+    <span>Inovação · Segurança · Praticidade</span>
+  </div>
+</footer>
+
+<div class="modal" id="walletModal" aria-hidden="true">
+  <div class="modal-card">
+    <img class="modal-image" id="modalImage" src="" alt="">
+    <div class="modal-content">
+      <h3 id="modalName"></h3>
+      <button class="close" id="closeModal" aria-label="Fechar">×</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('walletModal');
+const modalImage = document.getElementById('modalImage');
+const modalName = document.getElementById('modalName');
+
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    modalImage.src = btn.dataset.image;
+    modalImage.alt = btn.dataset.name;
+    modalName.textContent = btn.dataset.name;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+  });
+});
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+document.getElementById('closeModal').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
